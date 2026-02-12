@@ -1,0 +1,22 @@
+module clk1Hz (
+    input clk,
+    input rst,
+    output reg clk_out
+);
+// Asi pues el Contador será de 26 bits
+    reg [25:0] count = 0;
+    always @(posedge clk, posedge rst) begin
+    if (rst == 1'b1) begin
+        count <= 0;
+        clk_out <= 0;
+    end
+else begin
+    if (count == 49_999_999) begin
+        count <= 0; // Reset del contador en active alto
+        clk_out <= ~clk_out; // Togglear el clk de salida.
+    end
+else
+        count <= count + 1; // Incrementa el contador
+    end
+end
+endmodule
